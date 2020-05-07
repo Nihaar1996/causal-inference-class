@@ -1,0 +1,739 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "from collections import defaultdict\n",
+    "import numpy as np\n",
+    "joint = defaultdict(int)\n",
+    "data = pd.read_csv('hw3.csv')\n",
+    "X =data['X']\n",
+    "Y =data['Y']\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>X</th>\n",
+       "      <th>Y</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>994</th>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>995</th>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>996</th>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>998</th>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>999</th>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>798 rows × 2 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "     X  Y\n",
+       "0    0  0\n",
+       "1    0  0\n",
+       "2    0  0\n",
+       "4    0  0\n",
+       "5    0  0\n",
+       "..  .. ..\n",
+       "994  0  0\n",
+       "995  0  0\n",
+       "996  0  0\n",
+       "998  0  0\n",
+       "999  0  0\n",
+       "\n",
+       "[798 rows x 2 columns]"
+      ]
+     },
+     "execution_count": 22,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# len(data.X.isin([0]))\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "joint = np.zeros((0,3))\n",
+    "for x in range(2):\n",
+    "    for y in range(2):\n",
+    "        count = len(data[data.X.isin([x]) & data.Y.isin([y])])\n",
+    "        joint = np.concatenate((joint,[[x,y,count]]),axis=0)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 29,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "joint_df = pd.DataFrame(joint)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>0</th>\n",
+       "      <th>1</th>\n",
+       "      <th>2</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>0.0</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>798.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>0.0</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>101.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>1.0</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>14.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>1.0</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>87.0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "     0    1      2\n",
+       "0  0.0  0.0  798.0\n",
+       "1  0.0  1.0  101.0\n",
+       "2  1.0  0.0   14.0\n",
+       "3  1.0  1.0   87.0"
+      ]
+     },
+     "execution_count": 30,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "joint_df"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# import sys \n",
+    "# !{sys.executable} -m pip install pulp "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 73,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pulp as p"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 134,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Lp_prob = p.LpProblem('Problem', p.LpMaximize) \n",
+    "# Lp_prob = p.LpProblem('Problem', p.LpMinimize) "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 135,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "q00 = p.LpVariable(\"q00\", lowBound = 0)\n",
+    "q01 = p.LpVariable(\"q01\", lowBound = 0)\n",
+    "q02 = p.LpVariable(\"q02\", lowBound = 0)\n",
+    "q03 = p.LpVariable(\"q03\", lowBound = 0)\n",
+    "q10 = p.LpVariable(\"q10\", lowBound = 0)\n",
+    "q11 = p.LpVariable(\"q11\", lowBound = 0)\n",
+    "q12 = p.LpVariable(\"q12\", lowBound = 0)\n",
+    "q13 = p.LpVariable(\"q13\", lowBound = 0)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 136,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Lp_prob += q00 + q10 + q02 + q12"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 137,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Constraints: \n",
+    "Lp_prob += q00 + q01 + q02 + q03 + q10 + q11 + q12 + q13 == 1\n",
+    "Lp_prob += q11 + q13 == .087\n",
+    "Lp_prob += q00 + q01 == 0.798\n",
+    "Lp_prob += q02 + q03 == .014\n",
+    "Lp_prob += q10 + q12 == .101"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 138,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Problem:\n",
+      "MAXIMIZE\n",
+      "1*q00 + 1*q02 + 1*q10 + 1*q12 + 0\n",
+      "SUBJECT TO\n",
+      "_C1: q00 + q01 + q02 + q03 + q10 + q11 + q12 + q13 = 1\n",
+      "\n",
+      "_C2: q11 + q13 = 0.087\n",
+      "\n",
+      "_C3: q00 + q01 = 0.798\n",
+      "\n",
+      "_C4: q02 + q03 = 0.014\n",
+      "\n",
+      "_C5: q10 + q12 = 0.101\n",
+      "\n",
+      "VARIABLES\n",
+      "q00 Continuous\n",
+      "q01 Continuous\n",
+      "q02 Continuous\n",
+      "q03 Continuous\n",
+      "q10 Continuous\n",
+      "q11 Continuous\n",
+      "q12 Continuous\n",
+      "q13 Continuous\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(Lp_prob)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 139,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Optimal\n",
+      "0.913\n"
+     ]
+    }
+   ],
+   "source": [
+    "status = Lp_prob.solve()\n",
+    "print(p.LpStatus[status]) \n",
+    "print(p.value(Lp_prob.objective))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 155,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(1000, 2)"
+      ]
+     },
+     "execution_count": 155,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "X_arr = np.array(X)\n",
+    "X_arr = np.reshape(X_arr,(-1,1))\n",
+    "Y_arr = np.array(Y)\n",
+    "Y_arr = np.reshape(Y_arr,(-1,1))\n",
+    "D = np.concatenate((X_arr,Y_arr),axis=1)\n",
+    "# for x,y in [X,Y]:\n",
+    "#     print(x,y)\n",
+    "D.shape"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 259,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def compute_likelihood_matrix():\n",
+    "    \"\"\"The matrix created will be of dim 8 x 4\n",
+    "    where rows represent combinations of rx,ry and columns\n",
+    "    represent combinations of X,Y. So given a data sample (X,Y)\n",
+    "    simply select the appropriate column for the likelihood vector\"\"\"\n",
+    "    L = np.zeros((8,4))  \n",
+    "    L[0,0] = 1\n",
+    "    L[1,0] = 1\n",
+    "    L[2,1] = 1\n",
+    "    L[3,1] = 1\n",
+    "    L[4,2] = 1\n",
+    "    L[5,3] = 1\n",
+    "    L[6,2] = 1\n",
+    "    L[7,3] = 1\n",
+    "    # normalize columns of L\n",
+    "    L = L/2\n",
+    "    return L\n",
+    "\n",
+    "def create_dict_data2column():\n",
+    "    d = {}\n",
+    "    d['00'] = 0\n",
+    "    d['01'] = 1\n",
+    "    d['10'] = 2\n",
+    "    d['11'] = 3\n",
+    "    return d\n",
+    "\n",
+    "def gibbs(D,N):\n",
+    "    L = compute_likelihood_matrix() # likelihood matrix computed from functional relations provided\n",
+    "    d = create_dict_data2column() # a mapping between columns of likelihood matrix to its corresponding data point\n",
+    "    q_index = np.arange(8) # index for parameters vector q (will be used to count frequencies of each parameter)\n",
+    "    qi = 1/8 * np.ones(8) # the parameter vector q at ith step\n",
+    "    for i in range(N):\n",
+    "        R_array = np.zeros(8) # array of frequency counts of all parammeters sampled\n",
+    "        for t,(X,Y) in enumerate(D): # no. of data samples\n",
+    "\n",
+    "            lhood_col = d[str(X)+str(Y)]\n",
+    "            l = L[:,lhood_col]\n",
+    "            \n",
+    "            p_rxry = np.multiply(l,qi)\n",
+    "            p_rxry = p_rxry/np.linalg.norm(p_rxry,ord=1) # normalize it\n",
+    "            \n",
+    "            RxRy_i = np.random.choice(q_index,p=p_rxry.T)\n",
+    "            \n",
+    "            R_array[RxRy_i] +=1\n",
+    "        try:\n",
+    "            alpha = qi+R_array\n",
+    "            qi = np.random.dirichlet(alpha)\n",
+    "        except ValueError: #catching the exception if any alpha parameter becomes zero or too small\n",
+    "            alpha = [i if i>0 else 0.01 for i in alpha]\n",
+    "            qi = np.random.dirichlet(alpha)\n",
+    "    return qi"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 260,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Rounds completed 0 q for this round [394.125 404.125  46.125  55.125   8.125  38.125   6.125  49.125] number of data points 999\n",
+      "Rounds completed 1 q for this round [380.37451344 418.41061132  56.05518826  45.05971044   6.00655544\n",
+      "  32.02682489   8.00534599  55.06125022] number of data points 999\n",
+      "Rounds completed 2 q for this round [361.3746415  437.4304914   57.05273937  44.03698603   3.00284882\n",
+      "  43.03280481  11.01190188  44.05758618] number of data points 999\n",
+      "Rounds completed 3 q for this round [343.35144274 455.43288769  54.0660417   47.04509848   6.00242506\n",
+      "  38.04799352   8.00613629  49.04797452] number of data points 999\n",
+      "Rounds completed 4 q for this round [323.34963478 475.46197595  64.05500581  37.03779769   3.00575322\n",
+      "  37.02901439  11.0118005   50.04901766] number of data points 999\n",
+      "Rounds completed 5 q for this round [295.32211236 503.48902687  66.0698348   35.03411787   2.00135141\n",
+      "  28.02585874  12.00689575  59.0508022 ] number of data points 999\n",
+      "Rounds completed 6 q for this round [290.28180346 508.49849334  59.07273435  42.05091102   2.00443572\n",
+      "  33.02808445  12.01263104  54.05090662] number of data points 999\n",
+      "Rounds completed 7 q for this round [310.29315889 488.49625408  64.06588249  37.04284648   4.00204209\n",
+      "  32.03262183  10.01230499  55.05488915] number of data points 999\n",
+      "Rounds completed 8 q for this round [277.30840428 521.49574721  64.06398816  37.04491018   3.0020337\n",
+      "  31.02621543  11.00801112  56.05068991] number of data points 999\n",
+      "Rounds completed 9 q for this round [288.26915779 510.5164543   74.07083715  27.02684826   1.00078546\n",
+      "  37.0458207   13.00856884  50.06152751] number of data points 999\n",
+      "Rounds completed 10 q for this round [2.85311302e+02 5.13505969e+02 7.10651064e+01 3.00225261e+01\n",
+      " 6.86241861e-06 3.60399268e+01 1.40097097e+01 5.10454534e+01] number of data points 999\n",
+      "Rounds completed 11 q for this round [302.3043855  496.49303913  69.07768683  32.03207428   0.\n",
+      "  45.04295565  14.01312098  42.03673762] number of data points 999\n",
+      "Rounds completed 12 q for this round [2.99298430e+02 4.99504230e+02 7.50671187e+01 2.60245422e+01\n",
+      " 5.33821103e-10 4.80455291e+01 1.40148205e+01 3.90453295e+01] number of data points 999\n",
+      "Rounds completed 13 q for this round [321.31882282 477.47127161  78.07757341  23.0341669    0.\n",
+      "  44.04617788  14.00793838  43.044049  ] number of data points 999\n",
+      "Rounds completed 14 q for this round [3.02306617e+02 4.96489722e+02 8.30693831e+01 1.80208742e+01\n",
+      " 3.08626888e-04 4.80529709e+01 1.40136439e+01 3.90464807e+01] number of data points 999\n",
+      "Rounds completed 15 q for this round [332.30939965 466.48628841  76.08527714  25.02532264   0.\n",
+      "  56.05196497  14.00937669  31.03237048] number of data points 999\n",
+      "Rounds completed 16 q for this round [3.31332495e+02 4.67466567e+02 7.80748849e+01 2.30291515e+01\n",
+      " 1.82532346e-22 5.60593994e+01 1.40132478e+01 3.10242553e+01] number of data points 999\n",
+      "Rounds completed 17 q for this round [316.33795869 482.46240366  73.07928687  28.02477618   0.\n",
+      "  55.05646874  14.01164     32.02746586] number of data points 999\n",
+      "Rounds completed 18 q for this round [3.07302340e+02 4.91492824e+02 7.50654356e+01 2.60251288e+01\n",
+      " 4.79960263e-13 6.00747888e+01 1.40092379e+01 2.70302458e+01] number of data points 999\n",
+      "Rounds completed 19 q for this round [295.30098302 503.48921355  68.06443132  33.04021465   0.\n",
+      "  48.06092244  14.01774949  39.02648554] number of data points 999\n",
+      "Rounds completed 20 q for this round [2.62284323e+02 5.36522803e+02 7.30579117e+01 2.80308865e+01\n",
+      " 2.41487037e-85 3.30398229e+01 1.40146193e+01 5.40496336e+01] number of data points 999\n",
+      "Rounds completed 21 q for this round [251.27019539 547.52650468  68.05991409  33.02968918   0.\n",
+      "  34.03834623  14.01515231  53.06019812] number of data points 999\n",
+      "Rounds completed 22 q for this round [2.56254785e+02 5.42536293e+02 6.10675975e+01 4.00378055e+01\n",
+      " 4.21972842e-54 2.80337874e+01 1.40209061e+01 5.90488256e+01] number of data points 999\n",
+      "Rounds completed 23 q for this round [224.24066294 574.56662938  67.06677117  34.03105098   0.\n",
+      "  20.0258785   14.01239414  67.05661289] number of data points 999\n",
+      "Rounds completed 24 q for this round [2.43226796e+02 5.55573429e+02 6.90607888e+01 3.20329466e+01\n",
+      " 3.41086884e-24 2.40204457e+01 1.40121292e+01 6.30734646e+01] number of data points 999\n",
+      "Rounds completed 25 q for this round [260.25799472 538.558504    69.05319428  32.02270799   0.\n",
+      "  21.02993619  14.01543627  66.06222655] number of data points 999\n",
+      "Rounds completed 26 q for this round [2.73264787e+02 5.25536140e+02 7.40778722e+01 2.70303399e+01\n",
+      " 3.47256661e-52 2.30192246e+01 1.40102435e+01 6.40613930e+01] number of data points 999\n",
+      "Rounds completed 27 q for this round [283.2775898  515.54583925  71.06144584  30.02579419   0.\n",
+      "  27.0240846   14.01306871  60.05217761] number of data points 999\n",
+      "Rounds completed 28 q for this round [2.90302726e+02 5.08512207e+02 6.50636875e+01 3.60312974e+01\n",
+      " 1.73608442e-59 3.40267257e+01 1.40111890e+01 5.30521673e+01] number of data points 999\n",
+      "Rounds completed 29 q for this round [268.27822545 530.5485189   69.05247201  32.02597704   0.\n",
+      "  24.02380524  14.01292981  63.05807155] number of data points 999\n",
+      "Rounds completed 30 q for this round [2.87268534e+02 5.11504316e+02 6.50760220e+01 3.60310058e+01\n",
+      " 9.42517204e-06 2.60219846e+01 1.40219548e+01 6.10761728e+01] number of data points 999\n",
+      "Rounds completed 31 q for this round [273.28733432 525.52350312  65.06346648  36.03365834   0.\n",
+      "  23.01924557  14.00960997  64.0631822 ] number of data points 999\n",
+      "Rounds completed 32 q for this round [2.53242544e+02 5.45552962e+02 5.20605666e+01 4.90369513e+01\n",
+      " 7.30376029e-17 3.50339157e+01 1.40130027e+01 5.20600577e+01] number of data points 999\n",
+      "Rounds completed 33 q for this round [272.26834591 526.52447774  61.05141933  40.05184355   0.\n",
+      "  25.02959957  14.01417388  62.06014002] number of data points 999\n",
+      "Rounds completed 34 q for this round [3.06274002e+02 4.92531776e+02 6.70547570e+01 3.40352340e+01\n",
+      " 1.59504840e-11 3.50262168e+01 1.40153623e+01 5.20626519e+01] number of data points 999\n",
+      "Rounds completed 35 q for this round [316.31139552 482.47454831  75.06455573  26.02836116   0.\n",
+      "  32.0421655   14.01683023  55.06214355] number of data points 999\n",
+      "Rounds completed 36 q for this round [3.37304716e+02 4.61503864e+02 7.40713905e+01 2.70226341e+01\n",
+      " 6.99417713e-74 2.90294023e+01 1.40134104e+01 5.80545834e+01] number of data points 999\n",
+      "Rounds completed 37 q for this round [329.33516426 469.45036449  67.07887649  34.03406055   0.\n",
+      "  27.02740266  14.0249295   60.04920205] number of data points 999\n",
+      "Rounds completed 38 q for this round [3.28321584e+002 4.70465676e+002 5.90556776e+001 4.20395418e+001\n",
+      " 5.15621946e-102 3.30318128e+001 1.40106219e+001 5.40750860e+001] number of data points 999\n",
+      "Rounds completed 39 q for this round [315.3147713  483.49022713  56.06633973  45.04608417   0.\n",
+      "  31.02225974  14.00965794  56.05065999] number of data points 999\n",
+      "Rounds completed 40 q for this round [2.91302207e+02 5.07505367e+02 6.30584505e+01 3.80394293e+01\n",
+      " 5.49364665e-17 3.60297520e+01 1.40187311e+01 5.10460629e+01] number of data points 999\n",
+      "Rounds completed 41 q for this round [274.2784366  524.5216311   52.0593828   49.03519021   0.\n",
+      "  35.04142789  14.01908241  52.04484899] number of data points 999\n",
+      "Rounds completed 42 q for this round [3.05289653e+02 4.93510809e+02 5.30515124e+01 4.80498379e+01\n",
+      " 1.73837821e-09 2.80403181e+01 1.40136557e+01 5.90442138e+01] number of data points 999\n",
+      "Rounds completed 43 q for this round [327.29457386 471.49866579  62.05554402  39.04786781   0.\n",
+      "  32.0275424   14.01531207  55.06049404] number of data points 999\n",
+      "Rounds completed 44 q for this round [3.63360886e+02 4.35442731e+02 6.30556914e+01 3.80384297e+01\n",
+      " 2.84795018e-05 3.60302298e+01 1.40176273e+01 5.10543768e+01] number of data points 999\n",
+      "Rounds completed 45 q for this round [375.3684444  423.43508492  63.05678433  38.02861455   0.\n",
+      "  42.04584952  14.01520085  45.05002144] number of data points 999\n",
+      "Rounds completed 46 q for this round [3.49378256e+02 4.49421786e+02 7.00750770e+01 3.10388689e+01\n",
+      " 1.42293250e-05 4.80386875e+01 1.40102965e+01 3.90370134e+01] number of data points 999\n",
+      "Rounds completed 47 q for this round [349.36240203 449.43412361  78.09507138  23.02771407   0.\n",
+      "  55.04185551  14.00724452  32.03158888] number of data points 999\n",
+      "Rounds completed 48 q for this round [3.59374702e+002 4.39426320e+002 7.80757376e+001 2.30180196e+001\n",
+      " 1.22243490e-135 5.20480767e+001 1.40152779e+001 3.50418659e+001] number of data points 999\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Rounds completed 49 q for this round [384.37364438 414.43324766  73.07076344  28.0260828    0.\n",
+      "  61.05472153  14.01155476  26.02998543] number of data points 999\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "array([4.18414371e-01, 3.95351441e-01, 7.65424831e-02, 2.43372297e-02,\n",
+       "       7.44952519e-41, 5.08792917e-02, 9.46770657e-03, 2.50074761e-02])"
+      ]
+     },
+     "execution_count": 260,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    " gibbs(D,50)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 264,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def gibbs_q2b(D,N):\n",
+    "    L = compute_likelihood_matrix()\n",
+    "    d = create_dict_data2column()\n",
+    "    q_index = np.arange(8)\n",
+    "    qi = 1/8 * np.ones(8)\n",
+    "    ydox_array=[]\n",
+    "    for i in range(N):\n",
+    "        R_array = np.zeros(8)\n",
+    "        for t,(X,Y) in enumerate(D): # no. of data samples\n",
+    "\n",
+    "            lhood_col = d[str(X)+str(Y)]\n",
+    "            l = L[:,lhood_col]\n",
+    "            \n",
+    "            p_rxry = np.multiply(l,qi) # why does this not sum to 1\n",
+    "            p_rxry = p_rxry/np.linalg.norm(p_rxry,ord=1) # normalize it\n",
+    "            \n",
+    "            RxRy_i = np.random.choice(q_index,p=p_rxry.T)\n",
+    "            \n",
+    "            R_array[RxRy_i] +=1\n",
+    "#         print(\"Rounds completed\",i,\"q for this round\",R_array+qi, \"number of data points\",t)\n",
+    "        try:\n",
+    "            alpha = qi+R_array\n",
+    "            qi = np.random.dirichlet(alpha)\n",
+    "        except ValueError:\n",
+    "            alpha = [i if i>0 else 0.01 for i in alpha]\n",
+    "            qi = np.random.dirichlet(alpha)\n",
+    "        ydox = qi[2]+qi[6]+qi[3]+qi[7]\n",
+    "        ydox_array.append(ydox)\n",
+    "    return ydox_array\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 265,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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\n",
+      "text/plain": [
+       "<Figure size 432x288 with 1 Axes>"
+      ]
+     },
+     "metadata": {
+      "needs_background": "light"
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "import matplotlib.pyplot as plt\n",
+    "samples = gibbs_q2b(D,500)\n",
+    "plt.hist(samples,bins=25)\n",
+    "plt.show()\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 268,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def gibbs_q2b_2(D,N):\n",
+    "    L = compute_likelihood_matrix()\n",
+    "    d = create_dict_data2column()\n",
+    "    q_index = np.arange(8)\n",
+    "    qi = 1/8 * np.ones(8)\n",
+    "    ydox_array=[]\n",
+    "    for i in range(N):\n",
+    "        R_array = np.zeros(8)\n",
+    "        for t,(X,Y) in enumerate(D): # no. of data samples\n",
+    "\n",
+    "            lhood_col = d[str(X)+str(Y)]\n",
+    "            l = L[:,lhood_col]\n",
+    "            \n",
+    "            p_rxry = np.multiply(l,qi) # why does this not sum to 1\n",
+    "            p_rxry = p_rxry/np.linalg.norm(p_rxry,ord=1) # normalize it\n",
+    "            \n",
+    "            RxRy_i = np.random.choice(q_index,p=p_rxry.T)\n",
+    "            \n",
+    "            R_array[RxRy_i] +=1\n",
+    "#         print(\"Rounds completed\",i,\"q for this round\",R_array+qi, \"number of data points\",t)\n",
+    "        try:\n",
+    "            alpha = qi+R_array\n",
+    "            qi = np.random.dirichlet(alpha)\n",
+    "        except ValueError:\n",
+    "            alpha = [i if i>0 else 0.01 for i in alpha]\n",
+    "            qi = np.random.dirichlet(alpha)\n",
+    "        ydox = qi[5]+qi[1]+qi[3]+qi[7]\n",
+    "        ydox_array.append(ydox)\n",
+    "    return ydox_array"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 271,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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\n",
+      "text/plain": [
+       "<Figure size 432x288 with 1 Axes>"
+      ]
+     },
+     "metadata": {
+      "needs_background": "light"
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "samples = gibbs_q2b_2(D,500)\n",
+    "plt.hist(samples,bins=25)\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.2"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
